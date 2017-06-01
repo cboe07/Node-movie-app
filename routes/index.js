@@ -9,6 +9,8 @@ const imageBaseUrl = 'http://image.tmdb.org/t/p/w300';
 
 
 
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	// const apiKey = 'fec8b5ab27b292a68294261bb21b04a5';
@@ -16,7 +18,8 @@ router.get('/', function(req, res, next) {
 		var movieData = JSON.parse(movieData);
 		res.render('index', { 
 			movieData: movieData.results,
-			imageBaseUrl: imageBaseUrl
+			imageBaseUrl: imageBaseUrl,
+			titleHeader: "DC Movie Database"
 		});
 	});
 
@@ -37,22 +40,54 @@ router.post('/search', (req,res)=>{
 	request.get(searchUrl,(error, response, movieData)=>{
 		// res.json(JSON.parse(movieData));
 		var movieData = JSON.parse(movieData);
-		res.render('search', {
+		res.render('index', {
 			movieData: movieData.results,
-			imageBaseUrl: imageBaseUrl
+			imageBaseUrl: imageBaseUrl,
+			titleHeader: `You search for ${termUserSearchedFor}`
 		});
 	});
-
-router.get(searchUrl, function(req, res, next) {
-	res.render('search', {
-		movieData: movieData.results,
-		imageBaseUrl: imageBaseUrl
-	});
-});
 
 
 	// res.send("The post search page");
 });
 
+router.get('/movie/:id',(req,res)=>{
+	// The route has a :id in it. A : means WILDCARD
+	// a wild card is ANYTHING in that slot
+	// all wildcards in routes are avilable in req.params
+	var thisMovieId = req.params.id;
+	// Build the URL per the API docs
+	var thisMovieUrl = `${apiBaseUrl}/movie/${thisMovieId}?api_key=${config.apiKey}`;
+	var thisMovieUrl2 = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${config.apiKey}`;
+	// Use the request module to make an HTTP request
+	request.get(thisMovieUrl, (error, response, movieData)=>{
+		request.get(thisMovieUrl2, (error, response, creditData)=>{
+			// parse the response into JSON
+			var newMovieData = JSON.parse(movieData);
+			var newCreditData = JSON.parse(creditData);
+			// res.json(movieData);
+			// First arg: the view file
+			// Second param: obj to send the view file
+			res.render('single-movie',{
+				movieData: newMovieData,
+				imageBaseUrl: imageBaseUrl,
+				creditData: newCreditData
+			});
+
+		});
+		
+
+	});
+	// res.send(req.params.id);
+});
+
 
 module.exports = router;
+
+
+
+
+
+
+
+

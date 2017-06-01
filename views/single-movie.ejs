@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+
+
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="header text-danger col-sm-12 text-center">
+				<h1><%= movieData.title %></h1>	
+			</div>
+
+			<div class='col-sm-6 col-sm-offset-3 text-center'>
+				<form id="search-form" class="form-inline" action="/search" method="post">
+					<input type="text" placeholder="Move Title" name="searchString"/>
+					<button type="submit" class="btn btn-primary">Search</button>
+				</form>
+			</div>
+
+			<div class="col-sm-12 movies">
+
+				<div class="col-sm-4">
+					<img src="<%= imageBaseUrl+movieData.poster_path %>" >
+				</div>
+				<div class="tagline"><em><%= movieData.tagline %></em></div><br/>
+
+				<strong>Overview</strong>
+				<div><%= movieData.overview %></div><br/>
+
+				<strong>Cast</strong>
+				<% for(let i = 0; i < 4; i++) { %>
+					<div>
+						<%= creditData.cast[i].name %>
+					
+					</div>
+				<% } %><br/>
+
+				<div><strong>Released: </strong><%= movieData.release_date%></div><br/>
+
+				<div><strong>Runtime: </strong><%= movieData.runtime%> minutes</div><br/>
+
+				<div><strong>Average Rating: </strong><%= movieData.vote_average%>/10</div><br/>
+
+				<div><a href=<%= movieData.homepage %>>Official Website</a></div>
+					
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+</html>
