@@ -26,8 +26,11 @@
 				</form>
 			</div>
 
+
+
 			<div class="header text-danger col-sm-12 text-center">
 				<h1><%= movieData.title %></h1>	
+
 			</div>
 
 			<div class="col-sm-12 movies">
@@ -36,7 +39,7 @@
 					<img src="<%= imageBaseUrl+movieData.poster_path %>" >
 				</div>
 
-				<div>
+				<div class="genres">
 				<% for(let i = 0; i < movieData.genres.length; i++) { %>
 					<div>
 						<%= movieData.genres[i].name %>
@@ -47,7 +50,9 @@
 
 				<div class="tagline">
 					<strong>Tagline</strong><br/>
+					<% if(movieData.tagline) {%>
 					<em>"<%= movieData.tagline %>"</em>
+					<%}  %>
 				</div><br/>
 
 				<div><strong>Overview</strong><br/>

@@ -21,12 +21,12 @@ input{
 	color: black;
 }
 
-.text-danger{
+/* .text-danger{
 	font-size: 40px;
-}
+} */
 
 .col-sm-3 img{
-	height: 410px;
+	height: 390px;
 }
 
 img{
@@ -37,3 +37,25 @@ img{
 	padding: 3px;
 	border: solid white 5px;
 }
+
+.genres{
+	padding-top: 10px;
+}
+
+.error{
+	transition:  all 3s;
+	background-color: white;
+	color: red;
+}
+
+.error.animate{
+	background-color: red;
+	color: white;
+}
+
+
+
+
+
+
+

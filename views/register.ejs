@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script type="text/javascript" src="/javascripts/scripts.js"></script>
+	
+	<script type="text/javascript">
+
+	$(document).ready(function(){
+		if($('.error h3').html() != ""){
+			$('.error').addClass('animate');
+		}
+		
+	});
+		
+
+
+	</script>
+
+</head>
+<body>
+
+	<% include navbar %>
+
+	<div class="container">
+		<div class="row text-center">
+			<div class="header text-danger col-sm-12 text-center">
+				<div class="col-sm-12 text-danger error">
+					<h3><%= message %></h3>
+				</div>
+				<form action="/registerProcess" method="post">
+					<div class="col-sm-12">
+						<input type="text" name="name" placeholder="Enter your name">
+					</div>
+
+					<div class="col-sm-12">
+						<input type="email" name="email" placeholder="Enter your email">
+					</div>
+
+					<div class="col-sm-12">
+						<input type="password" name="password" placeholder="Enter your password">
+					</div>
+					<div class="col-sm-12">
+						<button class="btn btn success" type="submit">Register</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+</body>
+</html>

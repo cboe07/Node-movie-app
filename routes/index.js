@@ -27,6 +27,9 @@ router.get('/', function(req, res, next) {
 	// const apiKey = 'fec8b5ab27b292a68294261bb21b04a5';
 	request.get(nowPlayingUrl,(error, response, movieData)=>{
 		var movieData = JSON.parse(movieData);
+		console.log("===============");
+		console.log(req.session);
+		console.log("===============");
 		res.render('index', { 
 			movieData: movieData.results,
 			imageBaseUrl: imageBaseUrl,
@@ -91,6 +94,48 @@ router.get('/movie/:id',(req,res)=>{
 	});
 	// res.send(req.params.id);
 });
+
+router.get('/register', (req,res)=>{
+	// res.send("This is the register page.")
+	var message = req.query.msg;
+	if(message == "badEmail"){
+		message = "This email is already registered";
+	}
+	res.render('register', {message: message});
+});
+
+router.post('/registerProcess', (req,res)=>{
+	var name = req.body.name;
+	var email = req.body.email;
+	var password = req.body.password;
+
+	var selectQuery = "SELECT * FROM users WHERE email = ?";
+	connection.query(selectQuery, [email],(error,results)=>{
+		if(results.length == 0){
+			// User is not in db. Insert them
+			var insertQuery = "INSERT INTO users (name,email,password) VALUES (?,?,?)";
+			connection.query(insertQuery, [name,email,password], (error, results)=>{
+				// Add session vars -- name, email, loggedin, id
+				req.session.name = name;
+				req.session.email = email;
+				req.session.loggedin = true;
+				res.redirect('/?msg=registered')
+			});
+		}else{
+			// User is in db. Send them back to register witha message
+			res.redirect('/register?msg=badEmail');
+		}
+
+	});
+
+	// res.json(req.body);
+});
+
+router.get('/login', (req,res)=>{
+	// res.send("This is the login page.")
+	res.render('login',{ });
+});
+
 
 
 module.exports = router;
